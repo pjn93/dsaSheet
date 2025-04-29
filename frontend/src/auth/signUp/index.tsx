@@ -20,9 +20,14 @@ const SignUp: React.FC = () => {
 
   const onSubmit = async (data: LoginFormInputs) => {
     try {
-      const response = await axios.post(
-        "https://dsasheet1.onrender.com/api/users/signup",
-        data
+     const response = await axios.post(
+        "https://dsasheet1.onrender.com/api/users/signup", 
+        data,
+        {
+          headers: {
+            'Content-Type': 'application/json',  
+          },
+        }
       );
       const { token, user } = response.data;
   
