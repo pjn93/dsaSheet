@@ -22,6 +22,7 @@ export const updateSubtopicStatus = async (req: Request, res: Response) => {
   }
 
   try {
+    // First, update the subtopic status
     const updatedTopic = await DSATopics.findOneAndUpdate(
       { _id: topicId, "subtopics._id": subtopicId },
       { $set: { "subtopics.$.status": status } },
@@ -30,6 +31,18 @@ export const updateSubtopicStatus = async (req: Request, res: Response) => {
 
     if (!updatedTopic) {
       return res.status(404).json({ message: "Topic or subtopic not found" });
+    }
+
+    // Check if all subtopics are now "Done"
+    const allDone = updatedTopic.subtopics.every(sub => sub.status === "Done");
+
+    // If topic status needs to be updated, do it
+    if (allDone && updatedTopic.status !== "Done") {
+      updatedTopic.status = "Done";
+      await updatedTopic.save();
+    } else if (!allDone && updatedTopic.status !== "Pending") {
+      updatedTopic.status = "Pending";
+      await updatedTopic.save();
     }
 
     res.status(200).json(updatedTopic);
