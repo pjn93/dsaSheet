@@ -1,21 +1,3 @@
-// export interface TopicItem {
-//     name: string;
-//     _id: string;
-//     leetcode: string;
-//     youtube: string;
-//     article: string;
-//     level: string;
-//     status: "Done" | "Pending";
-//   }
-  
-//   export interface TopicCategory {
-//     _id: string;
-//     category: string;
-//     status: string;
-//     items: TopicItem[];
-//   }
-  
-
 export interface TopicItem {
   _id: string;  // Unique identifier for the subtopic
   name: string;  // Name of the subtopic
@@ -31,5 +13,6 @@ export interface TopicCategory {
   _id: string;  // Unique identifier for the category
   name: string;  // Name of the category (e.g., "Arrays", "Stacks")
   subtopics: TopicItem[];  // Array of TopicItems (subtopics) for this category
+  status: "Done" | "Pending";  // Status of the subtopic (Done or Pending)
 }
 
