@@ -80,7 +80,12 @@ function Topics() {
             onClick={() => toggleSection(topicSection.name)}
             className="algorithm-card"
           >
+               <div className="dsa-topicdiv">
             <h3>{topicSection.name.replace(/([A-Z])/g, " $1").trim()}</h3>
+            <span className={`status ${topicSection.status.toLowerCase()}`}>
+                {topicSection.status}
+              </span>
+              </div>
             {expanded[topicSection.name] ? (
               <IoIosArrowUp />
             ) : (
