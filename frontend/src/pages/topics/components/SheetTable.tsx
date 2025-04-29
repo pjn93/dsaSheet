@@ -1,36 +1,44 @@
 import React from 'react';
 import axios from "axios";
-import { TopicCategory } from '../../../dto/topic.dto';
+import { TopicItem } from '../../../dto/topic.dto';
 
 
-const SheetTable = ({ topicSection,setTopics }: { topicSection: TopicCategory; setTopics: any}) => {
+interface SheetTableProps {
+  topicSection: TopicItem[];
+  topicId: string; // You now need to pass this from parent
+  setTopics: React.Dispatch<React.SetStateAction<any>>;
+}
 
-  const toggleStatus = async (category: string, itemId: string, topicId: string, currentStatus: string) => {
+const SheetTable: React.FC<SheetTableProps> = ({ topicSection, topicId, setTopics }) => {
+
+  const toggleStatus = async (itemId: string, currentStatus: string) => {
     try {
       const token = localStorage.getItem("token");
-
-      // Send PUT request to update status in backend
+  
+      // Send updated status to backend
+      const newStatus = currentStatus === "Done" ? "Pending" : "Done";
+  
       await axios.put(
-        `http://localhost:3001/api/topics/${topicId}/items/${itemId}`,
-        {}, // No body needed since backend sets status to "Done"
+        `http://localhost:3001/api/dsaTopics/${topicId}/subtopics/${itemId}`,
+        { status: newStatus }, // send correct status
         {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         }
       );
-
-      // Update UI only after backend update succeeds
-      setTopics((prev) =>
+  
+      // Update local state
+      setTopics((prev: any[]) =>
         prev.map((section) =>
           section._id === topicId
             ? {
                 ...section,
-                items: section.items.map((item) =>
+                subtopics: section.subtopics.map((item: TopicItem) =>
                   item._id === itemId
                     ? {
                         ...item,
-                        status: currentStatus === "Done" ? "Pending" : "Done",
+                        status: newStatus,
                       }
                     : item
                 ),
@@ -43,9 +51,11 @@ const SheetTable = ({ topicSection,setTopics }: { topicSection: TopicCategory; s
       alert("Something went wrong while updating status.");
     }
   };
+  
+
   return (
     <div className="sub-topics">
-    <h3>Sub Topics</h3>
+    <h4>Sub Topics</h4>
     <table>
       <thead>
         <tr>
@@ -58,13 +68,13 @@ const SheetTable = ({ topicSection,setTopics }: { topicSection: TopicCategory; s
         </tr>
       </thead>
       <tbody>
-        {topicSection.items.map((topic, index) => (
+        {topicSection.map((topic, index) => (
           <tr key={index}>
             <td>
             <input
                   type="checkbox"
                   checked={topic.status === "Done"}
-                  onChange={() => toggleStatus(topicSection.category, topic._id, topicSection._id, topic.status)}
+                  onChange={() => toggleStatus(topic._id, topic.status)}
                 />
               <span style={{ marginLeft: "5px" }}>{topic.name}</span>
             </td>

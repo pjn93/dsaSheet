@@ -3,16 +3,15 @@ import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import "./style.scss";
 import axios from "axios";
 import SheetTable from "./components/SheetTable";
-import { TopicCategory } from "../../dto/topic.dto";
+import { TopicCategory } from "../../dto/topic.dto"; // Assuming this type is defined elsewhere in your app
 
 function Topics() {
   const [expanded, setExpanded] = useState<Record<string, boolean>>({});
   const [topics, setTopics] = useState<TopicCategory[]>([]);
-
-  // const [topics, setTopics] = useState([])
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  // Fetching the topics data
   useEffect(() => {
     const fetchTopics = async () => {
       setLoading(true);
@@ -20,7 +19,7 @@ function Topics() {
         const token = localStorage.getItem("token"); // or however you're storing the token
 
         const response = await axios.get(
-          "http://localhost:3001/api/topics/topics",
+          "http://localhost:3001/api/dsaTopics/dsa",
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -28,12 +27,15 @@ function Topics() {
           }
         );
         const data: TopicCategory[] = response.data;
+
         setTopics(data);
-        // Initialize all categories as expanded
+
+        // Initialize all categories as expanded by default
         const initialExpanded = data.reduce((acc, item) => {
-          acc[item.category] = true;
+          acc[item.name] = true;
           return acc;
         }, {} as Record<string, boolean>);
+
         setExpanded(initialExpanded);
       } catch (err) {
         setError("Failed to fetch topics data");
@@ -46,40 +48,49 @@ function Topics() {
     fetchTopics();
   }, []);
 
-  const toggleSection = (section) => {
+  // Toggle category visibility
+  const toggleSection = (section: string) => {
     setExpanded((prev) => ({ ...prev, [section]: !prev[section] }));
   };
 
-  
   return (
     <div className="dashboard">
       <div className="heading">
         <h2>Topics</h2>
-        <p>Explore these exiting topics!</p>
+        <p>Explore these exciting topics!</p>
       </div>
 
+      {/* Display loading state */}
+      {loading && <p>Loading...</p>}
+
+      {/* Display error message */}
+      {error && <p className="error-message">{error}</p>}
+
+      {/* Render topics */}
       {topics.map((topicSection) => (
         <section
           key={topicSection._id}
           className="topics-section"
           style={{
             marginBottom: "20px",
-            paddingBottom: expanded[topicSection.category] ? "10px" : "0",
+            paddingBottom: expanded[topicSection.name] ? "10px" : "0",
           }}
         >
           <div
-            onClick={() => toggleSection(topicSection.category)}
+            onClick={() => toggleSection(topicSection.name)}
             className="algorithm-card"
           >
-            <h3>{topicSection.category.replace(/([A-Z])/g, " $1").trim()}</h3>
-            {expanded[topicSection.category] ? (
+            <h3>{topicSection.name.replace(/([A-Z])/g, " $1").trim()}</h3>
+            {expanded[topicSection.name] ? (
               <IoIosArrowUp />
             ) : (
               <IoIosArrowDown />
             )}
           </div>
 
-          {expanded[topicSection.category] && <SheetTable  topicSection={topicSection} setTopics={setTopics}/>}
+          {expanded[topicSection.name] && (
+            <SheetTable topicSection={topicSection.subtopics} setTopics={setTopics} topicId={topicSection._id} />
+          )}
         </section>
       ))}
     </div>

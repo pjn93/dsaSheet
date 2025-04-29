@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import cors from "cors";
 import authRoutes from "./routes/authRoutes";
 import topicRoutes from "./routes/topicRoutes";
+import dsaTopicRouter from "./routes/dsaTopicRoutes";
 
 dotenv.config();
 
@@ -17,7 +18,7 @@ app.use(express.json());
 // Routes
 app.use("/api/users", authRoutes);
 app.use("/api/topics", topicRoutes);
-
+app.use("/api/dsaTopics", dsaTopicRouter);
 
 // Global error handler
 app.use((err: any, req: Request, res: Response) => {
