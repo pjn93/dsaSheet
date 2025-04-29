@@ -28,22 +28,11 @@ const SheetTable: React.FC<SheetTableProps> = ({ topicSection, topicId, setTopic
         }
       );
   
+      const updatedTopic = res.data;
       // Update local state
       setTopics((prev: any[]) =>
         prev.map((section) =>
-          section._id === topicId
-            ? {
-                ...section,
-                subtopics: section.subtopics.map((item: TopicItem) =>
-                  item._id === itemId
-                    ? {
-                        ...item,
-                        status: newStatus,
-                      }
-                    : item
-                ),
-              }
-            : section
+          section._id === topicId ? updatedTopic : section
         )
       );
     } catch (err) {
