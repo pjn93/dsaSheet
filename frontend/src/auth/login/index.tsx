@@ -18,7 +18,15 @@ const Login: React.FC = () => {
 
   const onSubmit = async (data: LoginFormInputs) => {
     try {
-      const response = await axios.post("https://dsasheet1.onrender.com/api/users/login", data);
+      const response = await axios.post(
+        "https://dsasheet1.onrender.com/api/users/login", 
+        data,
+        {
+          headers: {
+            'Content-Type': 'application/json',  // This specifies that we're sending JSON
+          },
+        }
+      );
       const { token, user } = response.data;
 
       localStorage.setItem("token", token);
