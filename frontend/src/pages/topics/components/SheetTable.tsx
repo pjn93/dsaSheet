@@ -19,7 +19,7 @@ const SheetTable: React.FC<SheetTableProps> = ({ topicSection, topicId, setTopic
       const newStatus = currentStatus === "Done" ? "Pending" : "Done";
   
       await axios.put(
-        `https://dsasheet1.onrender.com/api/dsaTopics/${topicId}/subtopics/${itemId}`,
+        `https://dsa-backend-b74p.onrender.com/api/dsaTopics/${topicId}/subtopics/${itemId}`,
         { status: newStatus }, // send correct status
         {
           headers: {
