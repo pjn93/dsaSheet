@@ -13,6 +13,7 @@ const SignUp: React.FC = () => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<LoginFormInputs>({
     resolver: yupResolver(loginSchema),
@@ -33,7 +34,7 @@ const SignUp: React.FC = () => {
   
       localStorage.setItem("token", token);
       localStorage.setItem("user", JSON.stringify(user));
-  
+      reset();
       toast.success("Signup successful!");
   
       navigate("/topics");
