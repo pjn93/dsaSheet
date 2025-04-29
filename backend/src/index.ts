@@ -12,8 +12,14 @@ dotenv.config();
 const app: Application = express();
 const PORT = process.env.PORT || 3001;
 
-// Middleware
-app.use(cors());
+// Configure CORS middleware to allow requests from your frontend domain
+const corsOptions = {
+  origin: 'https://dsafrontend.onrender.com',  // Allow requests from your frontend URL
+  methods: ['GET', 'POST', 'PUT', 'DELETE'], // Allow these HTTP methods
+  allowedHeaders: ['Content-Type', 'Authorization'], // Allow headers
+};
+
+app.use(cors(corsOptions));
 app.use(express.json());
 
 connectDB();
