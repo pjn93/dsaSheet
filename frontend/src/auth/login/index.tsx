@@ -11,7 +11,7 @@ import toast from "react-hot-toast";
 const Login: React.FC = () => {
   const navigate = useNavigate();
 
-  const { register, handleSubmit, formState: { errors } } = useForm<LoginFormInputs>({
+  const { register, handleSubmit, reset, formState: { errors } } = useForm<LoginFormInputs>({
     resolver: yupResolver(loginSchema),
   });
 
@@ -31,7 +31,7 @@ const Login: React.FC = () => {
 
       localStorage.setItem("token", token);
       localStorage.setItem("user", JSON.stringify(user));
-
+       reset();
       toast.success("Login successful");
 
       // Navigate after showing toast
