@@ -40,4 +40,4 @@ const DSATopicSchema: Schema = new Schema({
 });
 
 // Model for DSATopics collection
-export default mongoose.model<DSATopicDocument>('DSATopic', DSATopicSchema, 'dsaTopics');
+export default mongoose.model<DSATopicDocument>('DSATopics', DSATopicSchema, 'dsaTopics');

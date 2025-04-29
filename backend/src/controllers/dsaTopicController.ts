@@ -4,8 +4,11 @@ import DSATopics from '../models/DsaTopicModel';
 export const getAllTopics = async (req: Request, res: Response) => {
   try {
     const topics = await DSATopics.find();
+    console.log(topics,'topics')
+
     res.status(200).json(topics);
   } catch (error) {
+    console.log(error,'errror')
     res.status(500).json({ message: 'Error fetching topics', error });
   }
 };
