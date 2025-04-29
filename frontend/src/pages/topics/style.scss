@@ -18,7 +18,21 @@
     background: linear-gradient(135deg, #6e8efb, #a777e3);
     padding-inline: 10px;
     color: #fff;
-
+    .dsa-topicdiv{
+      display: flex;
+      padding: 0px 8px;
+      gap: 8px;
+      .status {
+        padding: 4px 6px 0px 6px;
+        background-color: #155724;
+        border-radius: 8px;
+        font-weight: bold;
+        font-size: 0.6em;
+        height: 16px;
+        margin-top: 20px;
+        background-color:#721c24;
+      }
+    }
   }
   .algorithm-card svg {
     margin-top: 24px; /* Adjust this value to your preference */
