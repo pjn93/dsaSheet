@@ -1,12 +1,13 @@
 import mongoose from 'mongoose';
-import dotenv from 'dotenv';
-
-dotenv.config(); // Loads environment variables from .env file (if locally)
 
 const connectDB = async () => {
   try {
-    // Using the environment variable
-    const conn = await mongoose.connect(process.env.MONGO_URI as string);
+    const uri = process.env.MONGO_URI;
+       if (!uri) {
+      throw new Error("MongoDB URI is missing in environment variables.");
+    }
+
+    const conn = await mongoose.connect(uri);
     console.log(`MongoDB connected: ${conn.connection.host}`);
   } catch (error) {
     console.error('MongoDB connection error:', error);
