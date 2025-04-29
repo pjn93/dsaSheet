@@ -19,7 +19,7 @@ function Topics() {
         const token = localStorage.getItem("token"); // or however you're storing the token
 
         const response = await axios.get(
-          "https://dsasheet1.onrender.com/api/dsaTopics/dsa",
+          "https://dsa-backend-b74p.onrender.com/api/dsaTopics/dsa",
           {
             headers: {
               Authorization: `Bearer ${token}`,
