@@ -21,7 +21,7 @@ const SignUp: React.FC = () => {
   const onSubmit = async (data: LoginFormInputs) => {
     try {
       const response = await axios.post(
-        "http://localhost:3001/api/users/signup",
+        "https://dsasheet1.onrender.com/api/users/signup",
         data
       );
       const { token, user } = response.data;
