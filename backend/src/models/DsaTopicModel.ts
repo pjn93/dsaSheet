@@ -15,6 +15,7 @@ export interface Subtopic {
 export interface DSATopicDocument extends Document {
   name: string;
   subtopics: Subtopic[];
+  status: "Done" | "Pending"; // Restrict status to only "Done" or "Pending"
 }
 
 // Subtopic Schema
@@ -36,7 +37,13 @@ const SubtopicSchema: Schema = new Schema({
 // DSATopic Schema
 const DSATopicSchema: Schema = new Schema({
   name: { type: String, required: true },
-  subtopics: { type: [SubtopicSchema], required: true }
+  subtopics: { type: [SubtopicSchema], required: true },
+  status: { 
+    type: String, 
+    required: true, 
+    enum: ['Done', 'Pending'], // Restricting the possible values for status
+    default: 'Pending' // Default value for status
+  }
 });
 
 // Model for DSATopics collection
