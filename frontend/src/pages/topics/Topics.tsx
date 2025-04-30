@@ -68,39 +68,41 @@ function Topics() {
 
       {/* Render topics */}
       {topics.map((topicSection) => (
-        <section
-          key={topicSection._id}
-          className="topics-section"
-          style={{
-            marginBottom: "20px",
-            paddingBottom: expanded[topicSection.name] ? "10px" : "0",
-          }}
-        >
-          <div
-            onClick={() => toggleSection(topicSection.name)}
-            className="algorithm-card"
-          >
-               <div className="dsa-topicdiv">
-            <h3>{topicSection.name.replace(/([A-Z])/g, " $1").trim()}</h3>
-            <span className={`status ${topicSection.status.toLowerCase()}`}>
-                {topicSection.status}
-              </span>
-              </div>
-            <span className={`status ${topicSection.status.toLowerCase()}`}>
-                {topicSection.status}
-              </span>
-              </div>
-            {expanded[topicSection.name] ? (
-              <IoIosArrowUp />
-            ) : (
-              <IoIosArrowDown />
-            )}
-          </div>
+       <section
+  key={topicSection._id}
+  className="topics-section"
+  style={{
+    marginBottom: "20px",
+    paddingBottom: expanded[topicSection.name] ? "10px" : "0",
+  }}
+>
+  <div
+    onClick={() => toggleSection(topicSection.name)}
+    className="algorithm-card"
+  >
+    <div className="dsa-topicdiv">
+      <h3>{topicSection.name.replace(/([A-Z])/g, " $1").trim()}</h3>
+      <span className={`status ${topicSection.status.toLowerCase()}`}>
+        {topicSection.status}
+      </span>
+    </div>
 
-          {expanded[topicSection.name] && (
-            <SheetTable topicSection={topicSection.subtopics} setTopics={setTopics} topicId={topicSection._id} />
-          )}
-        </section>
+    {expanded[topicSection.name] ? (
+      <IoIosArrowUp />
+    ) : (
+      <IoIosArrowDown />
+    )}
+  </div>
+
+  {expanded[topicSection.name] && (
+    <SheetTable
+      topicSection={topicSection.subtopics}
+      setTopics={setTopics}
+      topicId={topicSection._id}
+    />
+  )}
+</section>
+
       ))}
     </div>
   );
