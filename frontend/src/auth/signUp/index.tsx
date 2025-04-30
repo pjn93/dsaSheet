@@ -6,9 +6,12 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { loginSchema, LoginFormInputs } from "./signUp.config";
 import toast from "react-hot-toast";
+import Input from "../../components/input/Input";
+import Button from "../../components/button/Button";
 
 const SignUp: React.FC = () => {
   const navigate = useNavigate();
+  const [showPassword, setShowPassword] = useState(false);
 
   const {
     register,
@@ -36,7 +39,6 @@ const SignUp: React.FC = () => {
       localStorage.setItem("user", JSON.stringify(user));
       reset();
       toast.success("Signup successful!");
-  
       navigate("/topics");
     } catch (error: any) {
       toast.error(error.response?.data?.message || "Signup failed");
@@ -44,24 +46,26 @@ const SignUp: React.FC = () => {
   };
 
   return (
-    <div className="login-container">
+<div className="login-container">
       <form className="login-form" onSubmit={handleSubmit(onSubmit)}>
         <h2>Sign Up</h2>
 
-        <input type="text" placeholder="Full Name" {...register("fullName")} />
+        <Input type="text" placeholder="Full Name" {...register("fullName")} />
         <p className="error">{errors.fullName?.message}</p>
 
-        <input type="email" placeholder="Email" {...register("email")} />
+        <Input type="email" placeholder="Email" {...register("email")} />
         <p className="error">{errors.email?.message}</p>
 
-        <input
-          type="password"
+        <Input
           placeholder="Password"
+          showToggle
+          showPassword={showPassword}
+          onTogglePassword={() => setShowPassword((prev) => !prev)}
           {...register("password")}
         />
         <p className="error">{errors.password?.message}</p>
 
-        <button type="submit">Sign Up</button>
+        <Button label="Sign Up" />
         <p className="signup-text">
           Already have an account? <Link to="/login">Login</Link>
         </p>
