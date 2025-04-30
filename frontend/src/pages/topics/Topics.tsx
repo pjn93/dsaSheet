@@ -86,6 +86,10 @@ function Topics() {
                 {topicSection.status}
               </span>
               </div>
+            <span className={`status ${topicSection.status.toLowerCase()}`}>
+                {topicSection.status}
+              </span>
+              </div>
             {expanded[topicSection.name] ? (
               <IoIosArrowUp />
             ) : (

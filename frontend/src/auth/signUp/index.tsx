@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./style.scss";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
@@ -34,11 +34,12 @@ const SignUp: React.FC = () => {
         }
       );
       const { token, user } = response.data;
-  
+
       localStorage.setItem("token", token);
       localStorage.setItem("user", JSON.stringify(user));
-      reset();
+
       toast.success("Signup successful!");
+
       navigate("/topics");
     } catch (error: any) {
       toast.error(error.response?.data?.message || "Signup failed");

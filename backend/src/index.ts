@@ -1,5 +1,4 @@
-import express, { Application, Request, Response } from "express";
-import mongoose from "mongoose";
+import express, { Application } from "express";
 import dotenv from "dotenv";
 import cors from "cors";
 import authRoutes from "./routes/authRoutes";
