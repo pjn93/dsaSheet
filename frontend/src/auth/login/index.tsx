@@ -50,7 +50,6 @@ const Login: React.FC = () => {
         <h2>Login</h2>
 
         <Input type="email" placeholder="Email" {...register("email")} />
-        <Input type="email" placeholder="Email" {...register("email")} />
         <p className="error">{errors.email?.message}</p>
         <Input
           placeholder="Password"
@@ -62,10 +61,10 @@ const Login: React.FC = () => {
         <p className="error">{errors.password?.message}</p>
 
         <Button label="Login" />
-        <Button label="Login" />
+       
         <p className="signup-text">
           Don't have an account? <Link to="/">Sign Up</Link>
-          Don't have an account? <Link to="/">Sign Up</Link>
+        
         </p>
       </form>
     </div>
