@@ -52,13 +52,8 @@ const Login: React.FC = () => {
         <Input type="email" placeholder="Email" {...register("email")} />
         <Input type="email" placeholder="Email" {...register("email")} />
         <p className="error">{errors.email?.message}</p>
-
-        <Input
         <Input
           placeholder="Password"
-          showToggle
-          showPassword={showPassword}
-          onTogglePassword={() => setShowPassword((prev) => !prev)}
           showToggle
           showPassword={showPassword}
           onTogglePassword={() => setShowPassword((prev) => !prev)}
