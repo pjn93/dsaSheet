@@ -10,6 +10,7 @@ import toast from "react-hot-toast";
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
+  const [showPassword, setShowPassword] = useState(false);
 
   const { register, handleSubmit, reset, formState: { errors } } = useForm<LoginFormInputs>({
     resolver: yupResolver(loginSchema),
@@ -37,34 +38,32 @@ const Login: React.FC = () => {
       // Navigate after showing toast
       setTimeout(() => {
         navigate("/topics");
-      }, 1000); // Adjust delay as needed
+      }, 1000);
     } catch (error: any) {
       toast.error(error.response?.data?.message || "Login failed");
     }
   };
 
   return (
-    <div className="login-container">
+<div className="login-container">
       <form className="login-form" onSubmit={handleSubmit(onSubmit)}>
         <h2>Login</h2>
 
-        <input
-          type="email"
-          placeholder="Email"
-          {...register("email")}
-        />
+        <Input type="email" placeholder="Email" {...register("email")} />
         <p className="error">{errors.email?.message}</p>
 
-        <input
-          type="password"
+        <Input
           placeholder="Password"
+          showToggle
+          showPassword={showPassword}
+          onTogglePassword={() => setShowPassword((prev) => !prev)}
           {...register("password")}
         />
         <p className="error">{errors.password?.message}</p>
 
-        <button type="submit">Login</button>
+        <Button label="Login" />
         <p className="signup-text">
-        Don't have an account? <Link to="/">Sign Up</Link>
+          Don't have an account? <Link to="/">Sign Up</Link>
         </p>
       </form>
     </div>
